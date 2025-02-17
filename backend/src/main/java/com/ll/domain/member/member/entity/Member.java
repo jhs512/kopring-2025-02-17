@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -19,7 +18,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
 public class Member extends BaseTime {
     @Column(unique = true, length = 30)
@@ -35,6 +33,14 @@ public class Member extends BaseTime {
     private String apiKey;
 
     private String profileImgUrl;
+
+    public Member(String username, String password, String nickname, String apiKey, String profileImgUrl) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.apiKey = apiKey;
+        this.profileImgUrl = profileImgUrl;
+    }
 
     public String getName() {
         return nickname;
