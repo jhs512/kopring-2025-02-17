@@ -26,6 +26,21 @@ public class RsData<T> {
         this(resultCode, msg, (T) new Empty());
     }
 
+    @NonNull
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    @NonNull
+    public String getMsg() {
+        return msg;
+    }
+
+    @NonNull
+    public T getData() {
+        return data;
+    }
+
     @JsonIgnore
     public int getStatusCode() {
         return Integer.parseInt(resultCode.split("-")[0]);
