@@ -56,9 +56,9 @@ class Post : BaseTime {
 
     fun addComment(author: Member, content: String): PostComment {
         val comment = PostComment(
-                this,
-                author,
-                content
+            this,
+            author,
+            content
         )
 
         comments.add(comment)
@@ -67,11 +67,11 @@ class Post : BaseTime {
     }
 
     val commentsByOrderByIdDesc: List<PostComment>
-    get() = comments.reversed()
+        get() = comments.reversed()
 
     fun getCommentById(commentId: Long): Optional<PostComment> {
         return comments.stream()
-                .filter { comment -> comment.id == commentId }
+            .filter { comment -> comment.id == commentId }
             .findFirst()
     }
 
@@ -91,12 +91,12 @@ class Post : BaseTime {
 
     fun checkActorCanDelete(actor: Member?) {
         Optional.of(
-                getCheckActorCanDeleteRs(actor)
+            getCheckActorCanDeleteRs(actor)
         )
-                .filter { rsData -> rsData.isFail }
+            .filter { rsData -> rsData.isFail }
             .ifPresent { rsData ->
-            throw ServiceException(rsData.resultCode, rsData.msg)
-        }
+                throw ServiceException(rsData.resultCode, rsData.msg)
+            }
     }
 
     fun getCheckActorCanModifyRs(actor: Member?): RsData<Empty> {
@@ -109,12 +109,12 @@ class Post : BaseTime {
 
     fun checkActorCanModify(actor: Member?) {
         Optional.of(
-                getCheckActorCanModifyRs(actor)
+            getCheckActorCanModifyRs(actor)
         )
-                .filter { rsData -> rsData.isFail }
+            .filter { rsData -> rsData.isFail }
             .ifPresent { rsData ->
-            throw ServiceException(rsData.resultCode, rsData.msg)
-        }
+                throw ServiceException(rsData.resultCode, rsData.msg)
+            }
     }
 
     fun getCheckActorCanReadRs(actor: Member?): RsData<Empty> {
@@ -129,19 +129,19 @@ class Post : BaseTime {
 
     fun checkActorCanRead(actor: Member?) {
         Optional.of(
-                getCheckActorCanReadRs(actor)
+            getCheckActorCanReadRs(actor)
         )
-                .filter { rsData -> rsData.isFail }
+            .filter { rsData -> rsData.isFail }
             .ifPresent { rsData ->
-            throw ServiceException(rsData.resultCode, rsData.msg)
-        }
+                throw ServiceException(rsData.resultCode, rsData.msg)
+            }
     }
 
     private fun processGenFile(
-            oldPostGenFile: PostGenFile?,
-            typeCode: PostGenFile.TypeCode,
-            fileNo: Int,
-            filePath: String
+        oldPostGenFile: PostGenFile?,
+        typeCode: PostGenFile.TypeCode,
+        fileNo: Int,
+        filePath: String
     ): PostGenFile {
         val isModify = oldPostGenFile != null
         val originalFileName = Ut.file.getOriginalFileName(filePath)
@@ -151,7 +151,7 @@ class Post : BaseTime {
         val fileExtType2Code = Ut.file.getFileExtType2CodeFromFileExt(fileExt)
 
         var metadataStr = Ut.file.getMetadata(filePath).entries.stream()
-                .map { entry -> entry.key + "=" + entry.value }
+            .map { entry -> entry.key + "=" + entry.value }
             .collect(Collectors.joining("&"))
 
         if (Ut.str.isNotBlank(metadataStrFromFileName)) {
@@ -162,14 +162,14 @@ class Post : BaseTime {
         }
 
         val fileName = if (isModify) Ut.file.withNewExt(oldPostGenFile!!.fileName, fileExt) else UUID.randomUUID()
-                .toString() + "." + fileExt
+            .toString() + "." + fileExt
         val fileSize = Ut.file.getFileSize(filePath)
         val actualFileNo = if (fileNo == 0) getNextGenFileNo(typeCode) else fileNo
 
         val genFile = if (isModify) oldPostGenFile!! else PostGenFile(
-                this,
-                typeCode,
-                actualFileNo
+            this,
+            typeCode,
+            actualFileNo
         )
 
         genFile.originalFileName = originalFileName
@@ -202,28 +202,28 @@ class Post : BaseTime {
 
     private fun getNextGenFileNo(typeCode: PostGenFile.TypeCode): Int {
         return genFiles.stream()
-                .filter { genFile -> genFile.typeCode == typeCode }
+            .filter { genFile -> genFile.typeCode == typeCode }
             .mapToInt { genFile -> genFile.fileNo }
             .max()
-                .orElse(0) + 1
+            .orElse(0) + 1
     }
 
     fun getGenFileById(id: Long): Optional<PostGenFile> {
         return genFiles.stream()
-                .filter { genFile -> genFile.id == id }
+            .filter { genFile -> genFile.id == id }
             .findFirst()
     }
 
     fun getGenFileByTypeCodeAndFileNo(typeCode: PostGenFile.TypeCode, fileNo: Int): Optional<PostGenFile> {
         return genFiles.stream()
-                .filter { genFile -> genFile.typeCode == typeCode }
+            .filter { genFile -> genFile.typeCode == typeCode }
             .filter { genFile -> genFile.fileNo == fileNo }
             .findFirst()
     }
 
     fun deleteGenFile(typeCode: PostGenFile.TypeCode, fileNo: Int) {
         getGenFileByTypeCodeAndFileNo(typeCode, fileNo)
-                .ifPresent { this.deleteGenFile(it) }
+            .ifPresent { this.deleteGenFile(it) }
     }
 
     fun deleteGenFile(postGenFile: PostGenFile) {
@@ -237,8 +237,8 @@ class Post : BaseTime {
 
     fun modifyGenFile(typeCode: PostGenFile.TypeCode, fileNo: Int, filePath: String): PostGenFile {
         val postGenFile = getGenFileByTypeCodeAndFileNo(
-                typeCode,
-                fileNo
+            typeCode,
+            fileNo
         ).get()
 
         return modifyGenFile(postGenFile, filePath)
@@ -246,8 +246,8 @@ class Post : BaseTime {
 
     fun putGenFile(typeCode: PostGenFile.TypeCode, fileNo: Int, filePath: String): PostGenFile {
         val opPostGenFile = getGenFileByTypeCodeAndFileNo(
-                typeCode,
-                fileNo
+            typeCode,
+            fileNo
         )
 
         return if (opPostGenFile.isPresent) {
@@ -259,12 +259,12 @@ class Post : BaseTime {
 
     fun checkActorCanMakeNewGenFile(actor: Member?) {
         Optional.of(
-                getCheckActorCanMakeNewGenFileRs(actor)
+            getCheckActorCanMakeNewGenFileRs(actor)
         )
-                .filter { rsData -> rsData.isFail }
+            .filter { rsData -> rsData.isFail }
             .ifPresent { rsData ->
-            throw ServiceException(rsData.resultCode, rsData.msg)
-        }
+                throw ServiceException(rsData.resultCode, rsData.msg)
+            }
     }
 
     fun getCheckActorCanMakeNewGenFileRs(actor: Member?): RsData<Empty> {
@@ -276,10 +276,10 @@ class Post : BaseTime {
     }
 
     val isTemp: Boolean
-    get() = !published && "임시글" == title
+        get() = !published && "임시글" == title
 
     val thumbnailImgUrlOrDefault: String
-    get() = Optional.ofNullable(thumbnailGenFile)
+        get() = Optional.ofNullable(thumbnailGenFile)
             .map { it.publicUrl }
             .orElse("https://placehold.co/1200x1200?text=POST $id&darkInvertible=1")
 }
