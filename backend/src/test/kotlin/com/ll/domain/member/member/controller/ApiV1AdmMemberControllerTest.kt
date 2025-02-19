@@ -54,19 +54,19 @@ class ApiV1AdmMemberControllerTest {
         for (i in members.indices) {
             val member = members[i]
             resultActions
-                .andExpect(MockMvcResultMatchers.jsonPath("$.items[${i}].id").value(member.id))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.items[$i].id").value(member.id))
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$.items[${i}].createDate")
+                    MockMvcResultMatchers.jsonPath("$.items[$i].createDate")
                         .value(Matchers.startsWith(member.createDate.toString().substring(0, 20)))
                 )
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$.items[${i}].modifyDate")
+                    MockMvcResultMatchers.jsonPath("$.items[$i].modifyDate")
                         .value(Matchers.startsWith(member.modifyDate.toString().substring(0, 20)))
                 )
-                .andExpect(MockMvcResultMatchers.jsonPath("$.items[${i}].username").value(member.username))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.items[${i}].nickname").value(member.name))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.items[$i].username").value(member.username))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.items[$i].nickname").value(member.name))
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$.items[${i}].profileImgUrl")
+                    MockMvcResultMatchers.jsonPath("$.items[$i].profileImgUrl")
                         .value(member.profileImgUrlOrDefault)
                 )
         }

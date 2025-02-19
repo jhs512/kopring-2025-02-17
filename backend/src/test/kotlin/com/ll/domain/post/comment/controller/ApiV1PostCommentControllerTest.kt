@@ -52,20 +52,20 @@ class ApiV1PostCommentControllerTest {
         for (i in comments.indices) {
             val postComment = comments[i]
             resultActions
-                .andExpect(MockMvcResultMatchers.jsonPath("$[${i}].id").value(postComment.id))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[$i].id").value(postComment.id))
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$[${i}].createDate")
+                    MockMvcResultMatchers.jsonPath("$[$i].createDate")
                         .value(Matchers.startsWith(postComment.createDate.toString().substring(0, 20)))
                 )
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$[${i}].modifyDate")
+                    MockMvcResultMatchers.jsonPath("$[$i].modifyDate")
                         .value(Matchers.startsWith(postComment.modifyDate.toString().substring(0, 20)))
                 )
-                .andExpect(MockMvcResultMatchers.jsonPath("$[${i}].authorId").value(postComment.author.id))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[$i].authorId").value(postComment.author.id))
                 .andExpect(
-                    MockMvcResultMatchers.jsonPath("$[${i}].authorName").value(postComment.author.name)
+                    MockMvcResultMatchers.jsonPath("$[$i].authorName").value(postComment.author.name)
                 )
-                .andExpect(MockMvcResultMatchers.jsonPath("$[${i}].content").value(postComment.content))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[$i].content").value(postComment.content))
         }
     }
 
