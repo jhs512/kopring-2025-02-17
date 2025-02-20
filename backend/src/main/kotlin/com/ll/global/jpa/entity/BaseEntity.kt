@@ -2,6 +2,7 @@ package com.ll.global.jpa.entity
 
 import com.ll.standard.util.Ut
 import jakarta.persistence.*
+import org.hibernate.Hibernate
 
 @MappedSuperclass
 abstract class BaseEntity {
@@ -18,7 +19,7 @@ abstract class BaseEntity {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
 
         other as BaseEntity
 

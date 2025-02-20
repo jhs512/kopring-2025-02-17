@@ -1,10 +1,16 @@
 package com.ll.domain.member.member.dto
 
 import com.ll.domain.member.member.entity.Member
-import org.springframework.lang.NonNull
+import io.swagger.v3.oas.annotations.media.Schema
 
-class MemberWithUsernameDto(member: Member) : MemberDto(member) {
-    @NonNull
-    val username: String = member.username
+class MemberWithUsernameDto(
+    @Schema(hidden = true)
+    member: Member
+) : MemberDto(member) {
+    val username: String
+
+    init {
+        this.username = member.username
+    }
 }
 
