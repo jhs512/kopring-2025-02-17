@@ -12,7 +12,7 @@ class Member : BaseTime {
     @Column(unique = true, length = 60)
     lateinit var username: String
 
-    @Column(length = 50)
+    @Column(length = 65)
     lateinit var password: String
 
     @Column(length = 30)
@@ -42,10 +42,6 @@ class Member : BaseTime {
         this.nickname = nickname
         this.apiKey = apiKey
         this.profileImgUrl = profileImgUrl
-    }
-
-    fun matchPassword(password: String): Boolean {
-        return this.password == password
     }
 
     val authoritiesAsStringList: List<String>
