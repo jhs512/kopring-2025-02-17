@@ -29,9 +29,9 @@ class ApiV1AdmMemberController(
     ): PageDto<MemberWithUsernameDto> {
         return PageDto(
             memberService.findByPaged(searchKeywordType, searchKeyword, page, pageSize)
-                .map { member: Member ->
+                .map {
                     MemberWithUsernameDto(
-                        member
+                        it
                     )
                 }
         )
