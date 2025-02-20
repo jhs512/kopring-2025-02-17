@@ -4,6 +4,7 @@ import com.ll.domain.member.member.service.MemberService;
 import com.ll.domain.post.genFile.entity.PostGenFile;
 import com.ll.domain.post.post.entity.Post;
 import com.ll.domain.post.post.service.PostService;
+import com.ll.domain.post.genFile.controller.PostGenFileController;
 import com.ll.standard.util.Ut;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
