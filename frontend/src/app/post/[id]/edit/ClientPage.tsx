@@ -65,6 +65,10 @@ export default function ClientPage({
   const [post, setPost] = useState(_post);
 
   useEffect(() => {
+    setPost(_post);
+  }, [_post]);
+
+  useEffect(() => {
     const needToRefresh = window.sessionStorage.getItem("needToRefresh");
 
     if (needToRefresh === "true") {
